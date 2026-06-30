@@ -1,4 +1,4 @@
-# 📝 Asidiq Notes
+# 📝 Two Notes
 
 Aplikasi catatan pribadi desktop yang simpel, cepat, dan elegan — dibangun dengan **Vue 3**, **Electron**, dan **Tailwind CSS**. Semua catatan tersimpan secara lokal di perangkatmu, tanpa perlu internet atau akun.
 
