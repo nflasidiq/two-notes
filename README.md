@@ -43,7 +43,7 @@ Aplikasi catatan pribadi desktop yang simpel, cepat, dan elegan — dibangun den
 ## 📁 Struktur Project
 
 ```
-asidiq-notes/
+two-notes/
 ├── electron/                  # Electron main & preload process
 │   ├── main.ts                # Entry point Electron (BrowserWindow)
 │   ├── preload.ts             # Preload script (IPC bridge)
