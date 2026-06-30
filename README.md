@@ -77,8 +77,8 @@ two-notes/
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/username/asidiq-notes.git
-cd asidiq-notes
+git clone https://github.com/username/two-notes.git
+cd two-notes
 
 # 2. Install dependencies
 npm install
