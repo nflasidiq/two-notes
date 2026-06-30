@@ -7,7 +7,7 @@
       <h1
         class="text-emerald-400 font-bold tracking-wide text-lg flex items-center gap-2"
       >
-        <span>📝</span> Asidiq Notes
+        <span>📝</span> My Notes
       </h1>
       <button
         @click="createNewNote"

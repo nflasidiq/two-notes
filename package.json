@@ -1,7 +1,8 @@
 {
-  "name": "asidiq-notes---template-vue",
+  "name": "two-notes",
+  "productName": "Two Notes",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
