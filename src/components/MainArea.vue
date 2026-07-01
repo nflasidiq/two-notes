@@ -1,12 +1,12 @@
 <template>
-  <main class="flex-1 flex flex-col bg-dark-bg relative overflow-hidden">
+  <main class="flex-1 flex flex-col bg-dark-bg relative min-w-0 overflow-hidden">
     <!-- Jika ada catatan yang dipilih -->
-    <div v-if="activeNote" class="flex-1 flex flex-col h-full">
+    <div v-if="activeNote" class="flex-1 flex flex-col h-full min-h-0">
       <!-- Header Atas Area Konten -->
       <header
-        class="p-4 border-b border-gray-850 flex items-center justify-between bg-dark-sidebar/30"
+        class="p-4 border-b border-gray-850 flex items-center justify-between bg-dark-sidebar/30 shrink-0"
       >
-        <div class="flex items-center gap-3 w-2/3">
+        <div class="flex items-center gap-3 min-w-0 flex-1">
           <!-- Tombol Hamburger (Muncul kalau sidebar ditutup) -->
           <button
             v-if="!sidebarOpen"
@@ -34,14 +34,14 @@
             v-model="activeNote.title"
             @input="saveToLocalStorage"
             type="text"
-            class="bg-transparent font-bold text-xl border-none focus:outline-none text-white w-full"
+            class="bg-transparent font-bold text-xl border-none focus:outline-none text-white w-full min-w-0"
             placeholder="Judul Catatan..."
           />
         </div>
       </header>
 
       <!-- Area Isi Konten (Bisa Teks Panjang & To-Do List sekaligus) -->
-      <div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+      <div class="flex-1 overflow-y-auto overflow-x-hidden p-6 space-y-8 custom-scrollbar min-h-0">
         <!-- BAGIAN 1: Catatan Teks Panjang -->
         <section class="space-y-2">
           <label
@@ -52,7 +52,7 @@
           <textarea
             v-model="activeNote.content"
             @input="saveToLocalStorage"
-            class="w-full min-h-[180px] bg-gray-900/50 border border-gray-800 focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800 rounded-xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none resize-none leading-relaxed text-sm shadow-inner"
+            class="w-full min-h-[180px] bg-gray-900/50 border border-gray-800 focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800 rounded-xl p-4 text-gray-200 placeholder-gray-600 focus:outline-none resize-none leading-relaxed text-sm shadow-inner box-border"
             placeholder="Ketik apa apapun di sini..."
           ></textarea>
         </section>
@@ -66,17 +66,17 @@
           </label>
 
           <!-- Input Buat Tambah To-Do Baru -->
-          <div class="flex gap-2">
+          <div class="flex gap-2 min-w-0">
             <input
               v-model="newTodoText"
               @keyup.enter="addTodo"
               type="text"
-              class="flex-1 bg-gray-900/50 border border-gray-800 focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800 rounded-xl px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 focus:outline-none"
+              class="flex-1 min-w-0 bg-gray-900/50 border border-gray-800 focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800 rounded-xl px-4 py-2.5 text-sm text-gray-200 placeholder-gray-600 focus:outline-none"
               placeholder="Tambah tugas baru lalu tekan Enter..."
             />
             <button
               @click="addTodo"
-              class="bg-dark-green hover:bg-dark-green-light text-emerald-300 px-4 py-2.5 rounded-xl border border-emerald-800 text-sm font-semibold transition-colors duration-150"
+              class="bg-dark-green hover:bg-dark-green-light text-emerald-300 px-4 py-2.5 rounded-xl border border-emerald-800 text-sm font-semibold transition-colors duration-150 shrink-0 whitespace-nowrap"
             >
               Tambah
             </button>
@@ -98,13 +98,13 @@
               :key="todo.id"
               class="flex items-center justify-between p-3.5 hover:bg-gray-800/30 transition-colors duration-100 group/todo"
             >
-              <div class="flex items-center gap-3 flex-1 mr-4">
+              <div class="flex items-center gap-3 flex-1 min-w-0 mr-2">
                 <!-- Checkbox Custom -->
                 <input
                   type="checkbox"
                   v-model="todo.done"
                   @change="saveToLocalStorage"
-                  class="w-4 h-4 rounded border-gray-700 bg-gray-800 text-emerald-600 focus:ring-emerald-900 cursor-pointer accent-emerald-600"
+                  class="w-4 h-4 rounded border-gray-700 bg-gray-800 text-emerald-600 focus:ring-emerald-900 cursor-pointer accent-emerald-600 shrink-0"
                 />
                 <!-- Teks To-Do (Jika dicoret/done, pakai kelas line-through) -->
                 <input
@@ -112,7 +112,7 @@
                   @change="saveToLocalStorage"
                   type="text"
                   :class="[
-                    'bg-transparent border-none focus:outline-none w-full text-sm transition-all duration-150',
+                    'bg-transparent border-none focus:outline-none w-full min-w-0 text-sm transition-all duration-150',
                     todo.done
                       ? 'line-through text-gray-600 italic'
                       : 'text-gray-300',
