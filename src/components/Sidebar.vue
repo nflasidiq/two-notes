@@ -62,23 +62,23 @@
               : 'hover:bg-gray-800/50 text-gray-400 hover:text-gray-200',
           ]"
         >
-          <div class="flex items-center gap-2 overflow-hidden w-full mr-2">
+          <div class="flex items-center gap-2 w-full mr-2 min-w-0">
             <span class="text-sm shrink-0">📄</span>
             <!-- Input inline untuk edit nama catatan -->
             <input
               :ref="(el) => setNoteInputRef(note.id, el)"
               v-model="note.title"
               @change="saveToLocalStorage"
-              @click.stop
+              @click="handleInputClick($event, note.id)"
               @keyup.enter="finishEditing"
               @blur="finishEditing"
               type="text"
               :readonly="editingNoteId !== note.id"
               :class="[
-                'bg-transparent border-none focus:outline-none rounded px-1 py-1 text-sm w-full truncate',
+                'bg-transparent border-none focus:outline-none rounded px-1 py-0.5 text-sm w-full truncate min-w-0',
                 editingNoteId === note.id
                   ? 'ring-1 ring-emerald-600 cursor-text bg-gray-900/50'
-                  : 'cursor-pointer',
+                  : 'cursor-pointer pointer-events-none',
               ]"
             />
           </div>
@@ -283,6 +283,13 @@ const startEditing = (noteId) => {
       input.select();
     }
   });
+};
+
+// Klik input: kalau lagi edit → stop propagation, kalau gak → biarkan bubble ke parent (selectNote)
+const handleInputClick = (e, noteId) => {
+  if (editingNoteId.value === noteId) {
+    e.stopPropagation();
+  }
 };
 
 const finishEditing = () => {
