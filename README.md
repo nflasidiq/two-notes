@@ -1,4 +1,4 @@
-# 📝 Two Notes
+# 📝 To-List-an
 
 Aplikasi catatan pribadi desktop yang simpel, cepat, dan elegan — dibangun dengan **Vue 3**, **Electron**, dan **Tailwind CSS**. Semua catatan tersimpan secara lokal di perangkatmu, tanpa perlu internet atau akun.
 
@@ -14,19 +14,22 @@ Aplikasi catatan pribadi desktop yang simpel, cepat, dan elegan — dibangun den
 
 | Fitur | Deskripsi |
 |---|---|
-| 📄 **Buat & Kelola Catatan** | Tambah, edit judul, dan hapus catatan dengan mudah |
-| ✍️ **Catatan Teks Panjang** | Tulis catatan bebas di area teks yang luas |
-| ✅ **To-Do List** | Setiap catatan punya checklist to-do sendiri |
-| 🎨 **Dark Mode Elegan** | Tampilan gelap modern dengan aksen hijau emerald |
-| 💾 **Penyimpanan Lokal** | Data tersimpan otomatis di `localStorage` — privat & offline |
-| ✏️ **Edit Judul Inline** | Rename catatan langsung dari sidebar tanpa modal |
-| 🖥️ **Aplikasi Desktop** | Berjalan sebagai app native via Electron |
+| 📄 **Buat & Kelola Catatan** | Tambah, kunjungi, dan kelola berbagai file catatan dengan mudah. |
+| ↔️ **Draggable Resizer Sidebar** | Ukuran lebar sidebar bisa diatur secara dinamis dengan menggeser garis pemisah (antara 200px hingga 480px) dan otomatis tersimpan di penyimpanan lokal. |
+| 🗂️ **Sidebar Buka/Tutup (Collapsible)** | Sembunyikan sidebar untuk tampilan menulis penuh (Full Main Area) dengan transisi animasi yang mulus. |
+| 📱 **Responsive & Auto-fit Layout** | Area utama (Main Area) yang responsif dan menyesuaikan ukuran secara dinamis tanpa merusak UI saat window desktop dikecilkan atau sidebar digeser. |
+| ⋮ **Menu Opsi Catatan (3 Titik)** | Setiap catatan memiliki opsi terpisah untuk mengedit nama secara inline atau menghapus catatan. |
+| ✏️ **Edit Nama Catatan Terfokus** | Klik "Edit Nama" dari menu opsi untuk mengganti nama secara inline dengan fokus input dan ring indikator yang rapi. |
+| ⚠️ **Modal Konfirmasi Hapus** | Menghapus catatan lebih aman dengan adanya jendela popup konfirmasi agar tidak terhapus secara tidak sengaja. |
+| ✍️ **Catatan Teks & To-Do List** | Tulis teks panjang sekaligus catat tugas harian menggunakan checklist interaktif di setiap catatan. |
+| 💾 **Penyimpanan Lokal (Offline)** | Data catatan dan preferensi lebar sidebar tersimpan otomatis secara aman di `localStorage`. |
+| 🖥️ **Aplikasi Desktop** | Berjalan secara native sebagai aplikasi desktop cross-platform melalui Electron. |
 
 ---
 
 ## 📸 Preview
 
-> Jalankan aplikasi untuk melihat tampilan dark mode yang elegan dengan sidebar catatan di kiri dan area editor di kanan.
+> Jalankan aplikasi untuk menikmati workspace menulis yang minimalis dengan dark mode bernuansa emerald green, sidebar resizable, menu interaktif, dan to-do list ceklis.
 
 ---
 
@@ -50,17 +53,17 @@ two-notes/
 │   └── electron-env.d.ts      # Type declarations Electron
 ├── src/
 │   ├── components/
-│   │   ├── Sidebar.vue        # Sidebar: daftar catatan, tambah, hapus
-│   │   └── MainArea.vue       # Area utama: editor teks & to-do list
-│   ├── App.vue                # Root component: state management
+│   │   ├── Sidebar.vue        # Sidebar: daftar catatan, resizer, menu opsi (3 titik), modal hapus
+│   │   └── MainArea.vue       # Area utama: editor teks responsif & to-do list
+│   ├── App.vue                # Root component: state management (width, toggle, notes)
 │   ├── main.ts                # Entry point Vue app
 │   ├── style.css              # Global styles + Tailwind directives
-│   └── vite-env.d.ts          # Vite type declarations
-├── index.html                 # HTML entry point
+│   └── vite-env.d.ts          # Vite type declarations (Vue module definitions)
+├── index.html                 # HTML entry point (favicon set ke app-icon.ico)
 ├── vite.config.ts             # Konfigurasi Vite + Electron plugin
-├── tailwind.config.js         # Konfigurasi Tailwind (custom colors)
-├── tsconfig.json              # Konfigurasi TypeScript
-├── electron-builder.json5     # Konfigurasi build Electron
+├── tailwind.config.js         # Konfigurasi Tailwind (custom colors & utilities)
+├── tsconfig.json              # Konfigurasi TypeScript (baseUrl & paths support)
+├── electron-builder.json5     # Konfigurasi build Electron (custom app-icon.ico)
 └── package.json               # Dependencies & scripts
 ```
 
@@ -95,7 +98,7 @@ Aplikasi Electron akan terbuka secara otomatis setelah Vite selesai compile. �
 npm run build
 ```
 
-Hasil build akan tersedia di folder `dist-electron/` dan bisa di-package menjadi installer menggunakan Electron Builder.
+Hasil build executable (.exe, dll.) akan tersedia di folder `release/` dan dikemas menggunakan Electron Builder.
 
 ---
 
@@ -105,25 +108,28 @@ Hasil build akan tersedia di folder `dist-electron/` dan bisa di-package menjadi
 App.vue (State Manager)
 ├── Sidebar.vue
 │   ├── Tombol "+ Baru" → emit("create-note")
-│   ├── List Catatan → emit("select-note", id)
-│   ├── Input Edit Judul → emit("save")
-│   └── Tombol Hapus → emit("delete-note", id)
+│   ├── List Catatan (Bisa di-klik namanya) → emit("select-note", id)
+│   ├── Draggable Divider → Mengubah lebar sidebar & simpan ke localStorage
+│   ├── Tombol "Tutup" (Panel Icon) → emit("toggle-sidebar")
+│   └── Dropdown Menu (3 Titik)
+│       ├── Opsi "Edit Nama" → mengaktifkan input inline nama catatan
+│       └── Opsi "Hapus Catatan" → memunculkan Modal Konfirmasi → emit("delete-note", id)
 │
 └── MainArea.vue
-    ├── Input Judul Catatan → emit("save")
-    ├── Textarea Konten → emit("save")
+    ├── Tombol Hamburger (☰) → muncul saat sidebar ditutup → emit("toggle-sidebar")
+    ├── Input Judul Catatan & Textarea Konten (Auto-resize & responsive)
     ├── Input To-Do Baru → emit("add-todo", text)
     ├── Checkbox To-Do → emit("save")
     └── Tombol Hapus To-Do → emit("delete-todo", id)
 ```
 
-Semua state dikelola di `App.vue` dan diteruskan ke komponen anak melalui **props**. Komponen anak berkomunikasi balik ke parent melalui **emit events**.
+Semua state utama (daftar catatan, status toggle sidebar, lebar sidebar) dikelola di `App.vue` dan diteruskan ke komponen anak melalui **props**. Komponen anak mengirimkan aksi kembali ke parent menggunakan **emit events**.
 
 ---
 
 ## 🛠️ IDE yang Direkomendasikan
 
-- [VS Code](https://code.visualstudio.com/) + Extension [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-vue)
+- [VS Code](https://code.visualstudio.com/) + Extension [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-vue) (menggantikan Volar lama untuk performa lebih baik dan bebas error base path).
 
 ---
 

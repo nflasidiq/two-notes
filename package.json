@@ -1,8 +1,8 @@
 {
-  "name": "two-notes",
-  "productName": "Two Notes",
+  "name": "to-list-an",
+  "productName": "To-List-an",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
