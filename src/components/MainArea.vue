@@ -7,6 +7,19 @@
         class="p-4 border-b border-gray-850 flex items-center justify-between bg-dark-sidebar/30"
       >
         <div class="flex items-center gap-3 w-2/3">
+          <!-- Tombol Hamburger (Muncul kalau sidebar ditutup) -->
+          <button
+            v-if="!sidebarOpen"
+            @click="toggleSidebar"
+            class="text-gray-400 hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-800/50 transition-all duration-200 shrink-0"
+            title="Buka Sidebar"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
           <input
             v-model="activeNote.title"
             @input="saveToLocalStorage"
@@ -116,6 +129,19 @@
       v-else
       class="flex-1 flex flex-col items-center justify-center p-8 text-center select-none"
     >
+      <!-- Tombol Hamburger di pojok kiri atas kalau sidebar ditutup -->
+      <button
+        v-if="!sidebarOpen"
+        @click="toggleSidebar"
+        class="absolute top-4 left-4 text-gray-400 hover:text-emerald-400 p-1.5 rounded-lg hover:bg-gray-800/50 transition-all duration-200"
+        title="Buka Sidebar"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
       <span class="text-6xl mb-4">📂</span>
       <h2 class="text-xl font-bold text-gray-400">Belum Ada Catatan Aktif</h2>
       <p class="text-sm text-gray-600 mt-1 max-w-sm">
@@ -131,9 +157,10 @@ import { ref } from "vue";
 
 defineProps({
   activeNote: { type: Object, default: null },
+  sidebarOpen: { type: Boolean, default: true },
 });
 
-const emit = defineEmits(["add-todo", "delete-todo", "save"]);
+const emit = defineEmits(["add-todo", "delete-todo", "save", "toggle-sidebar"]);
 
 // Variabel untuk input to-do baru (sesuai dengan v-model di template)
 const newTodoText = ref("");
@@ -151,6 +178,10 @@ const deleteTodo = (todoId) => {
 
 const saveToLocalStorage = () => {
   emit("save");
+};
+
+const toggleSidebar = () => {
+  emit("toggle-sidebar");
 };
 </script>
 

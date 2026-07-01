@@ -6,18 +6,22 @@
     <Sidebar
       :notes="notes"
       :activeNoteId="activeNoteId"
+      :isOpen="sidebarOpen"
       @create-note="createNewNote"
       @select-note="selectNote"
       @delete-note="deleteNote"
       @save="saveToLocalStorage"
+      @toggle-sidebar="toggleSidebar"
     />
 
     <!-- ================= MAIN AREA KANAN ================= -->
     <MainArea
       :activeNote="activeNote"
+      :sidebarOpen="sidebarOpen"
       @add-todo="addTodo"
       @delete-todo="deleteTodo"
       @save="saveToLocalStorage"
+      @toggle-sidebar="toggleSidebar"
     />
   </div>
 </template>
@@ -30,6 +34,12 @@ import MainArea from "./components/MainArea.vue";
 // --- State Utama Aplikasi ---
 const notes = ref([]);
 const activeNoteId = ref(null);
+const sidebarOpen = ref(true);
+
+// --- Toggle Sidebar ---
+const toggleSidebar = () => {
+  sidebarOpen.value = !sidebarOpen.value;
+};
 
 // --- Computed Properties ---
 const activeNote = computed(() => {
