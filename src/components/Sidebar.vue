@@ -1,12 +1,11 @@
 <template>
   <aside
-    :class="[
-      'bg-dark-sidebar flex flex-col border-r border-gray-800 shrink-0 transition-all duration-300 ease-in-out overflow-hidden',
-      isOpen ? 'w-64' : 'w-0 border-r-0',
-    ]"
+    class="bg-dark-sidebar flex flex-col border-r border-gray-800 shrink-0 overflow-hidden"
+    :class="{ 'sidebar-closing': !isOpen }"
+    :style="{ width: isOpen ? width + 'px' : '0px' }"
   >
     <!-- Wrapper isi sidebar (supaya konten gak ikut kecil pas collapse) -->
-    <div class="w-64 h-full flex flex-col">
+    <div class="h-full flex flex-col" :style="{ minWidth: width + 'px' }">
       <!-- Header Sidebar -->
       <div
         class="p-4 flex items-center justify-between border-b border-gray-850"
@@ -94,6 +93,7 @@ defineProps({
   notes: { type: Array, required: true },
   activeNoteId: { type: String, default: null },
   isOpen: { type: Boolean, default: true },
+  width: { type: Number, default: 256 },
 });
 
 const emit = defineEmits([
@@ -115,6 +115,10 @@ const toggleSidebar = () => emit("toggle-sidebar");
 <style scoped>
 .border-gray-850 {
   border-color: rgba(31, 41, 55, 0.6);
+}
+.sidebar-closing {
+  transition: width 0.3s ease-in-out;
+  border-right-width: 0;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
